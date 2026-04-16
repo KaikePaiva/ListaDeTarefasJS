@@ -37,25 +37,36 @@ function removerTarefa(id) {
 function mostrarTarefas() {
   const lista = document.getElementById("lista");
 
-  lista.innerHTML = ""; // limpa antes de renderizar
+  lista.innerHTML = "";
 
   tarefas.forEach((tarefa) => {
     const li = document.createElement("li");
 
     const status = tarefa.concluida ? "✅" : "❌";
 
+    li.textContent = `${tarefa.titulo} ${status}`;
+
     li.addEventListener("click", () => {
       alternarStatus(tarefa.id);
       mostrarTarefas();
     });
 
-    li.textContent = `${tarefa.titulo} ${status}`;
+    const botaoRemover = document.createElement("button");
+    botaoRemover.textContent = "🗑️";
+
+    botaoRemover.addEventListener("click", (e) => {
+      e.stopPropagation();
+      removerTarefa(tarefa.id);
+      mostrarTarefas();
+    });
+
+    li.appendChild(botaoRemover);
 
     lista.appendChild(li);
   });
 }
 
-mostrarTarefas()
+mostrarTarefas();
 
 const input = document.getElementById("inputTarefa");
 const botao = document.getElementById("btnAdicionar");
@@ -63,13 +74,10 @@ const botao = document.getElementById("btnAdicionar");
 botao.addEventListener("click", () => {
   const valor = input.value;
 
-if(valor === "") return;
+  if (valor === "") return;
 
   adicionar(valor);
   mostrarTarefas();
 
   input.value = "";
 });
-
-
-
