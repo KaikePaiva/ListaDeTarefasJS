@@ -1,16 +1,43 @@
-let tarefas = [
-  { id: 1, titulo: "Estudar JS", concluida: false },
-  { id: 2, titulo: "Treinar código", concluida: true },
-];
+let tarefas = [];
+
+const dados = localStorage.getItem("tarefas");
+
+if (dados) {
+  tarefas = JSON.parse(dados);
+} else {
+  tarefas = [
+    { id: 1, titulo: "Estudar JS", concluida: false },
+    { id: 2, titulo: "Treinar código", concluida: true },
+  ];
+}
+
+function salvarDados() {
+  localStorage.setItem("tarefas", JSON.stringify(tarefas));
+}
+
+function gerarNovoID(tarefas){
+  const novaId = tarefas.map(r => r.id)
+
+  const maiorId = novaId.reduce((acc,num)=>{
+    if (num > acc) {
+     return num;
+   } else {
+     return acc;
+   }
+ }, 0)
+
+ return maiorId + 1;
+}
 
 function adicionar(titulo) {
   const novaTarefa = {
-    id: tarefas.length + 1,
+    id: gerarNovoID(tarefas),
     titulo: titulo,
     concluida: false,
   };
 
   tarefas.push(novaTarefa);
+  salvarDados();
 }
 
 function alternarStatus(id) {
@@ -18,9 +45,9 @@ function alternarStatus(id) {
 
   if (tarefa) {
     tarefa.concluida = !tarefa.concluida;
+    salvarDados();
   } else {
     console.log("Tarefa não encontrada");
-    return;
   }
 }
 
@@ -32,6 +59,8 @@ function removerTarefa(id) {
   if (tarefas.length === tamanhoAntes) {
     console.log("Tarefa não encontrada");
   }
+
+  salvarDados();
 }
 
 function mostrarTarefas() {
@@ -61,7 +90,6 @@ function mostrarTarefas() {
     });
 
     li.appendChild(botaoRemover);
-
     lista.appendChild(li);
   });
 }
@@ -81,3 +109,28 @@ botao.addEventListener("click", () => {
 
   input.value = "";
 });
+
+
+
+
+// const Dados = localStorage.getItem("tarefas");
+// console.log(typeof Dados);
+
+
+// const a = [
+//   {id:1},
+//   {id:5},
+//   {id:3},
+// ];
+
+// const ids = a.map( b => b.id);
+// console.log(ids)
+
+// const maior = ids.reduce((acc,num) => {
+//   if (num > acc) {
+//     return num;
+//   } else {
+//     return acc;
+//   }
+// }, 0);
+// console.log(maior)
