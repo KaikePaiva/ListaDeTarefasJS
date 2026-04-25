@@ -114,6 +114,21 @@ botao.addEventListener("click", () => {
   input.value = "";
 });
 
+input.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    const valor = input.value;
+
+    if (valor === "") return;
+
+    adicionar(valor);
+    mostrarTarefas();
+
+    input.value = "";
+  }
+});
+
+
+
 // const Dados = localStorage.getItem("tarefas");
 // console.log(typeof Dados);
 
