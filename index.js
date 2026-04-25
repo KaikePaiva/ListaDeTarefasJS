@@ -15,18 +15,18 @@ function salvarDados() {
   localStorage.setItem("tarefas", JSON.stringify(tarefas));
 }
 
-function gerarNovoID(tarefas){
-  const novaId = tarefas.map(r => r.id)
+function gerarNovoID(tarefas) {
+  const novaId = tarefas.map((r) => r.id);
 
-  const maiorId = novaId.reduce((acc,num)=>{
+  const maiorId = novaId.reduce((acc, num) => {
     if (num > acc) {
-     return num;
-   } else {
-     return acc;
-   }
- }, 0)
+      return num;
+    } else {
+      return acc;
+    }
+  }, 0);
 
- return maiorId + 1;
+  return maiorId + 1;
 }
 
 function adicionar(titulo) {
@@ -71,6 +71,10 @@ function mostrarTarefas() {
   tarefas.forEach((tarefa) => {
     const li = document.createElement("li");
 
+    if (tarefa.concluida) {
+      li.classList.add("concluida");
+    }
+
     const status = tarefa.concluida ? "✅" : "❌";
 
     li.textContent = `${tarefa.titulo} ${status}`;
@@ -110,12 +114,8 @@ botao.addEventListener("click", () => {
   input.value = "";
 });
 
-
-
-
 // const Dados = localStorage.getItem("tarefas");
 // console.log(typeof Dados);
-
 
 // const a = [
 //   {id:1},

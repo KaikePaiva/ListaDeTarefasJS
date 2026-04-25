@@ -53,4 +53,14 @@ li button {
   padding: 5px;
   border-radius: 5px;
   cursor: pointer;
+  transition: 0.2s;
+}
+
+li button:hover {
+  transform: scale(1.2);
+}
+
+.concluida {
+  text-decoration: line-through;
+  opacity: 0.6;
 }
